@@ -7,6 +7,24 @@ Assignment::Assignment(){
 	delay_score = 0;
 }
 
+Assignment::Assignment(const Assignment& original){
+	delay_score = 0;
+
+	int size = original.task_list.size();
+
+	for (int i = 0; i < size;i++){
+		this->add_task(*(original.task_list[i]));
+	}
+}
+
+Assignment::~Assignment(){
+	int size = task_list.size();
+
+	for (int i = 0; i < size;i++){
+		delete task_list[i];
+	}
+}
+
 void Assignment::calc_score(){
 	delay_score = 0;
 	int delta;
@@ -14,8 +32,6 @@ void Assignment::calc_score(){
 		delta = (*it)->end_time - (*it)->deadline;
 		delay_score += std::max(0, delta);
 	}
-
-	std::cout<< delay_score;
 }
 
 void Assignment::add_task(Task task){

@@ -12,20 +12,29 @@ int main(){
 	Task D ("Dani",1,1);
 	Task E ("Eduardo",1,1);
 
-	all_tasks.push_back(&A);
-	all_tasks.push_back(&B);
-	all_tasks.push_back(&C);
-	all_tasks.push_back(&D);
-	all_tasks.push_back(&E);
+	
 
 	
 	Assignment assignment;
-	assignment.task_list = all_tasks;
+
+	assignment.add_task(A);
+	assignment.add_task(B);
+	assignment.add_task(C);
+	assignment.add_task(D);
+	assignment.add_task(E);
+
 
 	assignment.update_task_timing();
 	assignment.calc_score();
 
+	
+
+	Assignment* b = new Assignment(assignment);
+
+	b->swap(0,2);
 	assignment.show();
+	b->show();
+	/*
 	std::cout<<assignment.delay_score<<std::endl;
 
 	assignment.swap(0,2);
@@ -34,5 +43,6 @@ int main(){
 
 	assignment.show();
 	std::cout<<assignment.delay_score<<std::endl;
+	*/
 
 }

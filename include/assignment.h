@@ -2,11 +2,14 @@
 #define assignment_h
 
 #include <list>
+#include "tuple.h"
 #include "task.h"
 #include <vector>
 
 class Assignment{
 public:
+
+	Tuple swapped_elements;
 
 	std::vector<Task*> task_list;
 
@@ -23,6 +26,8 @@ public:
 	void swap(int, int);
 
 	Assignment();
+	Assignment(const Assignment&);
+	~Assignment();
 };
 
 
