@@ -32,6 +32,8 @@ public:
 
 	void make_neighborhood();
 
+	void show_neighborhood();
+
 	bool is_tuple_same(Tuple, Tuple);
 };
 

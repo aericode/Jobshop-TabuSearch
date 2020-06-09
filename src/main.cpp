@@ -1,5 +1,7 @@
 #include "task.h"
 #include "assignment.h"
+#include "tuple.h"
+#include "search.h"
 #include <iostream>
 
 int main(){
@@ -14,7 +16,7 @@ int main(){
 
 	
 
-	
+	Search search;
 	Assignment assignment;
 
 	assignment.add_task(A);
@@ -31,9 +33,13 @@ int main(){
 
 	Assignment* b = new Assignment(assignment);
 
-	b->swap(0,2);
+	b->swap(0,4);
 	assignment.show();
 	b->show();
+
+	search.current_candidate = assignment;
+	search.make_neighborhood();
+	search.show_neighborhood();
 	/*
 	std::cout<<assignment.delay_score<<std::endl;
 

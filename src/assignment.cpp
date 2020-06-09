@@ -18,11 +18,13 @@ Assignment::Assignment(const Assignment& original){
 }
 
 Assignment::~Assignment(){
+	/*
 	int size = task_list.size();
 
 	for (int i = 0; i < size;i++){
 		delete task_list[i];
 	}
+	*/
 }
 
 void Assignment::calc_score(){
@@ -67,5 +69,8 @@ void Assignment::swap(int a, int b){
 	aux = task_list[a];
 	task_list[a] = task_list[b];
 	task_list[b] = aux;
+
+	this->swapped_elements.t1 = a;
+	this->swapped_elements.t2 = b;
 
 }
