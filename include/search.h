@@ -34,7 +34,17 @@ public:
 
 	void show_neighborhood();
 
+	void sort_neighborhood();
+
 	bool is_tuple_same(Tuple, Tuple);
+
+	static bool compare_assignment_ptr(Assignment*, Assignment*);
+
+	struct pointer_compare {
+      bool operator()(const Assignment* l, const Assignment* r) {
+        return *l < *r;
+      }
+    };
 };
 
 

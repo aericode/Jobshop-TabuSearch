@@ -4,6 +4,7 @@
 #include <list>
 #include "tuple.h"
 #include "task.h"
+#include <algorithm>
 #include <vector>
 
 class Assignment{
@@ -28,7 +29,10 @@ public:
 	Assignment();
 	Assignment(const Assignment&);
 	~Assignment();
-};
 
+	bool operator< (const Assignment &other) const {
+    	return delay_score < other.delay_score;
+	}
+}; 
 
 #endif

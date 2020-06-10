@@ -39,6 +39,8 @@ int main(){
 
 	search.current_candidate = assignment;
 	search.make_neighborhood();
+
+	search.sort_neighborhood();
 	search.show_neighborhood();
 	/*
 	std::cout<<assignment.delay_score<<std::endl;

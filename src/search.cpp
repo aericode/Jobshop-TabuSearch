@@ -1,5 +1,6 @@
 #include "search.h"
 #include <iostream>
+#include <algorithm>
 
 Search::Search(){}
 
@@ -21,6 +22,8 @@ void Search::make_neighborhood(){
 		for(int j = i+1; j < size;j++){
 			to_add = new Assignment(current_candidate);
 			to_add->swap(i,j);
+			to_add->update_task_timing();
+			to_add->calc_score();
 			neighborhood.push_back(to_add);
 		}
 	}
@@ -31,5 +34,10 @@ void Search::show_neighborhood(){
 	for(int i = 0; i < size;i++){
 		std::cout<<neighborhood[i]->swapped_elements.t1<<' '<<neighborhood[i]->swapped_elements.t2<<' ';
 		neighborhood[i]->show();
+		std::cout<<"Delay: "<<neighborhood[i]->delay_score<<std::endl;
 	}
+}
+
+void Search::sort_neighborhood(){
+	std::sort(neighborhood.begin(),neighborhood.end(), pointer_compare());
 }
