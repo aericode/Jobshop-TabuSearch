@@ -8,6 +8,7 @@ public:
 
 	Tuple();
 	Tuple(int, int);
+	Tuple(const Tuple&);
 };
 
 #endif

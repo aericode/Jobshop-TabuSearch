@@ -10,6 +10,7 @@
 class Search{
 public:
 
+	int iteration_limit;
 	int iteration_count;
 
 	//melhor encontrado até agora
@@ -21,7 +22,7 @@ public:
 	Assignment current_candidate;
 
 	//tuples with 
-	std::vector<Tuple> tabu_list;
+	std::vector<Tuple*> tabu_list;
 
 	//tamanho da lista tabu
 	int tabu_tenure;
@@ -29,6 +30,8 @@ public:
 	std::vector<Assignment*> neighborhood;
 
 	Search();
+
+	Search(Assignment, int, int);
 
 	void make_neighborhood();
 
@@ -45,6 +48,14 @@ public:
         return *l < *r;
       }
     };
+
+    bool is_tabu(Assignment*);
+
+    void get_next_chosen();
+
+    void do_search();
+
+    void show_tabu_list();
 };
 
 
