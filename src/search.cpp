@@ -1,12 +1,12 @@
-#define INT_MIN -2147483648
-#define DEFAULT_TENURE 3;
+#define INT_MAX 2147483648
+#define DEFAULT_TENURE 3
 
 #include "search.h"
 #include <iostream>
 #include <algorithm>
 
 Search::Search(){
-	best_score = INT_MIN;
+	best_score = INT_MAX;
 	tabu_tenure = DEFAULT_TENURE;
 
 	iteration_count = 0;
@@ -18,6 +18,12 @@ Search::Search(Assignment initial, int tabu_tenure_, int iteration_limit_){
 	iteration_limit   = iteration_limit_;
 
 	iteration_count = 0;
+
+	current_candidate.update_task_timing();
+	current_candidate.calc_score();
+	best_score = current_candidate.delay_score;
+	record_best = current_candidate;
+
 }
 
 bool Search::is_tuple_same(Tuple a, Tuple b){
@@ -71,20 +77,20 @@ bool Search::is_tabu(Assignment* assignment){
 void Search::get_next_chosen(){
 	for(int i = 0; i < neighborhood.size();i++){
 		//se o elemento não é tabu
-		if(!is_tabu(neighborhood[i]) ){
+		if(!is_tabu(neighborhood[i]) || is_aspiration_valid(neighborhood[i])){
 			//ele agora é o próximo candidato
 			current_candidate = *neighborhood[i];
 			//atualiza a lista tabu
 			Tuple * next_tabu = new Tuple(current_candidate.swapped_elements);
-			tabu_list.push_back(next_tabu);
+			tabu_list.insert(tabu_list.begin(), next_tabu);
 			if(tabu_list.size() > tabu_tenure){
 				int last = tabu_list.size() - 1;
 				Tuple * aux = tabu_list[last];
 				tabu_list.pop_back();
-				//todo delete aux;
+				delete aux;
 			}
 			//verifica scores
-			if (current_candidate.delay_score > best_score){
+			if (current_candidate.delay_score < best_score){
 				record_best = current_candidate;
 				best_score  = current_candidate.delay_score;
 			}
@@ -102,16 +108,19 @@ void Search::do_search(){
 		sort_neighborhood();
 		get_next_chosen();
 		iteration_count++;
-		current_candidate.show();
-		show_tabu_list();
+		record_best.show();
 	}
 
 	std::cout<<"melhor encontrado ";
-	current_candidate.show();
+	record_best.show();
 }
 
 void Search::show_tabu_list(){
 	for(int i = 0; i < tabu_list.size();i++){
 		std::cout<<tabu_list[i]->t1<<" "<<tabu_list[i]->t2<<'\n';
 	}
+}
+
+bool Search::is_aspiration_valid(Assignment* assignment){
+	return assignment->delay_score < best_score;
 }

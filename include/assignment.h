@@ -30,8 +30,8 @@ public:
 	Assignment(const Assignment&);
 	~Assignment();
 
-	bool operator< (const Assignment &other) const {
-    	return delay_score < other.delay_score;
+	bool operator> (const Assignment &other) const {
+    	return delay_score > other.delay_score;
 	}
 }; 
 

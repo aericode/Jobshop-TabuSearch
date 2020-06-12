@@ -43,9 +43,10 @@ public:
 
 	static bool compare_assignment_ptr(Assignment*, Assignment*);
 
+	//invertido para fazer sort reverso
 	struct pointer_compare {
       bool operator()(const Assignment* l, const Assignment* r) {
-        return *l < *r;
+        return *r > *l;
       }
     };
 
@@ -56,6 +57,8 @@ public:
     void do_search();
 
     void show_tabu_list();
+
+    bool is_aspiration_valid(Assignment*);
 };
 
 
