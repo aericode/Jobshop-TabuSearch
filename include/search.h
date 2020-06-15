@@ -5,6 +5,7 @@
 #include "task.h"
 #include "assignment.h"
 #include <vector>
+#include <string>
 
 
 class Search{
@@ -32,6 +33,10 @@ public:
 	Search();
 
 	Search(Assignment, int, int);
+
+	Search(std::string);
+
+	void read_file();
 
 	void make_neighborhood();
 

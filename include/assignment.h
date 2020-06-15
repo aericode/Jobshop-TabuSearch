@@ -20,6 +20,8 @@ public:
 	//Atenção!: Não calcula ao adicionar tarefa
 	void add_task(Task);
 
+	void add_task(Task*);
+
 	void update_task_timing();
 
 	void show();

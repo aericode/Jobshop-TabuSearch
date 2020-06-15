@@ -3,6 +3,7 @@
 
 #include "search.h"
 #include <iostream>
+#include <fstream>
 #include <algorithm>
 
 Search::Search(){
@@ -25,6 +26,54 @@ Search::Search(Assignment initial, int tabu_tenure_, int iteration_limit_){
 	record_best = current_candidate;
 
 }
+
+Search::Search(std::string file_location){
+	
+	Assignment assignment;
+	Task* next_task;
+
+	std::string tag;
+	std::string duration;
+	std::string deadline;
+
+	int conv_duration;
+	int conv_deadline;
+
+	std::string tabu_tenure_;
+	std::string iteration_limit_;
+
+	std::ifstream input("./input/default.csv");
+
+	if(!input.is_open()) std::cout << "Error during file reading" << std::endl;
+
+	getline(input, tabu_tenure_, ',');
+	getline(input, iteration_limit_, '\n');
+
+	this->tabu_tenure     = std::stoi(tabu_tenure_);
+	this->iteration_limit = std::stoi(iteration_limit_);
+
+	while(input.good()){
+		getline(input, tag, ',');
+		getline(input, duration, ',');
+		getline(input, deadline, '\n');
+
+		conv_duration = std::stoi(duration);
+		conv_deadline = std::stoi(deadline);
+
+		next_task = new Task(tag, conv_duration, conv_deadline);
+
+		assignment.add_task(next_task);
+	}
+
+	current_candidate = assignment;
+	current_candidate.update_task_timing();
+	current_candidate.calc_score();
+	best_score = current_candidate.delay_score;
+	record_best = current_candidate;
+
+}
+
+
 
 bool Search::is_tuple_same(Tuple a, Tuple b){
 	if(a.t1 == b.t1 && a.t2 == b.t2){
@@ -102,13 +151,11 @@ void Search::get_next_chosen(){
 
 void Search::do_search(){
 	tabu_list.clear();
-	std::cout<<tabu_list.size()<<std::endl;
 	while(iteration_count < iteration_limit){
 		make_neighborhood();
 		sort_neighborhood();
 		get_next_chosen();
 		iteration_count++;
-		record_best.show();
 	}
 
 	std::cout<<"melhor encontrado ";

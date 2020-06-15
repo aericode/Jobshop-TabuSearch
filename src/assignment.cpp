@@ -41,6 +41,10 @@ void Assignment::add_task(Task task){
 	task_list.push_back(to_add);
 }
 
+void Assignment::add_task(Task* task){
+	task_list.push_back(task);
+}
+
 void Assignment::update_task_timing(){
 	for (std::vector<Task*>::iterator it=task_list.begin(); it != task_list.end(); ++it){
 		if(it == task_list.begin()){
