@@ -1,0 +1,67 @@
+Tabu Search Job Shop
+Eric Andrade
+
+Objetivo: Resolver problemas de job shop (single machine, mono-objetivo visando o menor delay) utilizando a metaheurística Tabu Search (Busca tabu).
+
+Busca Tabu: https://pt.wikipedia.org/wiki/Pesquisa_tabu
+Job Shop: https://pt.wikipedia.org/wiki/Escalonamento_de_Job_Shop
+
+instruções de uso (linux)
+
+Compilação:
+
+- Abra o terminal na pasta root da aplicação
+- Digite make e clique enter
+- Este comando criará o executável "run" contendo o programa na pasta root
+
+Execução
+
+- Abra o terminal na pasta root da aplicação
+- Digite ./run e clique enter
+- O programa mostrará no terminal qual a melhor solução encontrada
+
+Mudando parâmetros
+
+- O programa ordena tarefas de acordo com o usuário solicitar em um arquivo na pasta "input"
+- O programa está configurado para ler do arquivo "default.csv" por padrão
+- Para mudar esta configuração, basta mudar o parâmetro do construtor de Search na função main para o endereço do aquivo desejado
+- Utilizando o arquivo:
+	- Na primeira linha existem 2 elementos
+	- Um número descrevendo o tamanho da lista tabu (Tabu tenure)
+	- E em seguida o número de iterações que o programa vai fazer para tentar alcançar a resposta
+
+	Ex: 5,100
+	Isso significa, lista com 5 elementos em 100 iterações
+
+	- As linhas seguintes descrevem as tarefas a serem agendadas, podem-se colocar várias tarefas.
+	-as tarefas contém:
+		-Tag (não precisa ser um nome)	
+		-Duração
+		-Deadline (prazo de entrega)
+	separados por vírgulas:
+		Tag, Duração, Deadline
+
+	ex:
+	Alex, 10, 10
+	Breno, 20, 30
+	Claudia, 30, 60
+
+	Ao qual o programa deverá responder:
+
+	melhor encontrado [ Alex Breno Claudia ]
+
+	Indicando a sequência de tarefas que resulta no menor atraso total (todas as tarefas são executadas exatamente no prazo, nesse exemplo totalizando um atraso zero, o melhor agendamento possível).
+
+- Detalhes da execução
+
+- "Scores de Atrasos negativos" não são contabilizados, ou seja, para a presente versão deste programa, um agendamento com zero de atraso é igual a outro que está adiantado 10 unidades de tempo, por exemplo. (inclusive, isto poderia ser utilizado como condição de parada, o melhor score possível é zero de atraso)
+Obs: Sem essa opção o programa decidiria finalizar tarefas com prazos longos o mais cedo possível para "compensar" por tarefas atrasadas. Isso é modelado pela função objetivo que nessse caso escolheu ser indiferente a prazos antecipados (algumas até punem antecipação)
+- Empates são desconsiderados no resultado final: Se X foi o melhor score encontrado, a primeira permutação a atingir X será a escolhida. (uma lista de permutações a atingir o score máximo pode ser interessante, se não interferir no tempo computacional do algoritmo )
+
+
+
+Segue abaixo um exemplo de arquivo válido:
+5,100
+João, 10, 99
+Maria, 20, 50
+Ana, 40, 55

@@ -42,7 +42,7 @@ Search::Search(std::string file_location){
 	std::string tabu_tenure_;
 	std::string iteration_limit_;
 
-	std::ifstream input("./input/default.csv");
+	std::ifstream input(file_location);
 
 	if(!input.is_open()) std::cout << "Error during file reading" << std::endl;
 
